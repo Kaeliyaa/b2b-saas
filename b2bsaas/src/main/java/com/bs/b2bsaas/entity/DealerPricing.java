@@ -27,6 +27,9 @@ public class DealerPricing extends BaseEntity {
   @JoinColumn(name = "product_id", nullable = false)
   private Product product;
 
+  @Column(nullable = false, precision = 12, scale = 2)
+  private BigDecimal customPrice;
+
   private Instant validFrom = Instant.now();
 
   private Instant validUntil;
