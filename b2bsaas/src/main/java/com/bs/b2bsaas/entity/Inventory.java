@@ -11,7 +11,7 @@ import lombok.*;
 @Entity
 @Table(name = "inventory",
     uniqueConstraints = @UniqueConstraint(columnNames = {"tenant_id", "product_id"}))
-public class Inventory {
+public class Inventory extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tenant_id", nullable = false)
   private Tenant tenant;

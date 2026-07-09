@@ -34,7 +34,9 @@ CREATE TABLE invoice_items (
                                unit_price NUMERIC(12,2) NOT NULL,
                                gst_rate NUMERIC(5,2) NOT NULL,
                                gst_amount NUMERIC(12,2) NOT NULL,
-                               line_total NUMERIC(12,2) NOT NULL
+                               line_total NUMERIC(12,2) NOT NULL,
+                               created_at TIMESTAMPTZ DEFAULT NOW(),
+                               updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE INDEX idx_invoices_tenant_id ON invoices(tenant_id);

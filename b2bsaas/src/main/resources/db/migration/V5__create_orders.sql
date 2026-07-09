@@ -42,21 +42,9 @@ CREATE TABLE order_items (
                              gst_amount NUMERIC(12,2) NOT NULL,
                              line_total NUMERIC(12,2) NOT NULL,
                              created_at TIMESTAMPTZ DEFAULT NOW(),
+                             updated_at TIMESTAMPTZ DEFAULT NOW(),
                              CONSTRAINT positive_quantity CHECK (quantity > 0),
                              CONSTRAINT positive_price CHECK (unit_price >= 0)
-);
-
-CREATE TABLE warehouse_operations (
-                                      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                                      tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-                                      order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-                                      assigned_to UUID REFERENCES users(id),
-                                      operation_type VARCHAR(50) NOT NULL,
-                                      status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-                                      notes TEXT,
-                                      started_at TIMESTAMPTZ,
-                                      completed_at TIMESTAMPTZ,
-                                      created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE INDEX idx_orders_tenant_id ON orders(tenant_id);
@@ -64,4 +52,3 @@ CREATE INDEX idx_orders_dealer_id ON orders(dealer_id);
 CREATE INDEX idx_orders_status ON orders(tenant_id, status);
 CREATE INDEX idx_orders_idempotency ON orders(idempotency_key);
 CREATE INDEX idx_order_items_order ON order_items(order_id);
-CREATE INDEX idx_warehouse_ops_order ON warehouse_operations(order_id);

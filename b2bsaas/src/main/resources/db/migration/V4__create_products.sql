@@ -34,6 +34,7 @@ CREATE TABLE dealer_pricing (
                                 valid_from TIMESTAMPTZ DEFAULT NOW(),
                                 valid_until TIMESTAMPTZ,
                                 created_at TIMESTAMPTZ DEFAULT NOW(),
+                                updated_at TIMESTAMPTZ DEFAULT NOW(),
                                 UNIQUE(tenant_id, dealer_id, product_id)
 );
 
@@ -44,6 +45,7 @@ CREATE TABLE inventory (
                            quantity_available INTEGER NOT NULL DEFAULT 0,
                            quantity_reserved INTEGER NOT NULL DEFAULT 0,
                            reorder_level INTEGER DEFAULT 10,
+                           created_at TIMESTAMPTZ DEFAULT NOW(),
                            updated_at TIMESTAMPTZ DEFAULT NOW(),
                            UNIQUE(tenant_id, product_id),
                            CONSTRAINT positive_quantity CHECK (quantity_available >= 0),
